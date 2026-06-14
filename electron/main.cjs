@@ -1,7 +1,6 @@
 "use strict";
 
 const { app, BrowserWindow, shell, Menu } = require("electron");
-const Database = require('better-sqlite3');
 const path = require("path");
 const { spawn } = require("child_process");
 const http = require("http");
