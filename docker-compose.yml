@@ -1,0 +1,37 @@
+services:
+  domainatrix:
+    build:
+      context: .
+    image: domainatrix:1.0.0
+    container_name: domainatrix
+    restart: unless-stopped
+    ports:
+      - "${PORT:-8765}:3000"
+    environment:
+      NODE_ENV: production
+      NEXT_TELEMETRY_DISABLED: "1"
+      DB_FILE_NAME: /app/data/domainatrix.sqlite
+      CRON_SECRET: ${CRON_SECRET:-change-me}
+      NOTIFICATION_WEBHOOK_URL: ${NOTIFICATION_WEBHOOK_URL:-}
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_SECURE: ${SMTP_SECURE:-false}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASS: ${SMTP_PASS:-}
+      NOTIFICATION_EMAIL_FROM: ${NOTIFICATION_EMAIL_FROM:-}
+      NOTIFICATION_EMAIL_TO: ${NOTIFICATION_EMAIL_TO:-}
+      CRUX_API_KEY: ${CRUX_API_KEY:-}
+    volumes:
+      - ./data:/app/data
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:3000').then((res) => process.exit(res.ok ? 0 : 1)).catch(() => process.exit(1))",
+        ]
+      interval: 30s
+      timeout: 5s
+      start_period: 20s
+      retries: 3

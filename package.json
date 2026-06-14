@@ -1,6 +1,6 @@
 {
   "name": "domainatrix",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "description": "A domain name analysis and management tool built with Next.js, Drizzle ORM, and Tailwind CSS.",
   "author": "Pink Pixel",
