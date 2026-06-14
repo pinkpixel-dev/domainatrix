@@ -108,8 +108,26 @@ function startServer() {
 
 function stopServer() {
   if (serverProcess) {
-    serverProcess.kill("SIGTERM");
+    const proc = serverProcess;
     serverProcess = null;
+
+    try {
+      proc.kill("SIGTERM");
+    } catch (err) {
+      // Ignore
+    }
+
+    const killTimeout = setTimeout(() => {
+      try {
+        proc.kill("SIGKILL");
+      } catch (err) {
+        // Ignore
+      }
+    }, 1500);
+
+    proc.on("exit", () => {
+      clearTimeout(killTimeout);
+    });
   }
 }
 
@@ -126,6 +144,7 @@ function createWindow() {
       ? path.join(ROOT, "icons", "linux", "256x256.png")
       : path.join(__dirname, "..", "build", "icons", "linux", "256x256.png"),
     backgroundColor: "#0f0f11",
+    autoHideMenuBar: true,
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: false,
@@ -233,4 +252,16 @@ app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
   }
+});
+
+// ── Process Cleanup Fallbacks ──────────────────────────────────────────────────
+
+process.on("exit", stopServer);
+process.on("SIGINT", () => {
+  stopServer();
+  process.exit(0);
+});
+process.on("SIGTERM", () => {
+  stopServer();
+  process.exit(0);
 });

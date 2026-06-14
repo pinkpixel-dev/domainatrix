@@ -60,13 +60,17 @@ export async function GET(request: NextRequest) {
     const data = await res.json();
     const metrics = data.record?.metrics ?? {};
 
+    const clsRaw = metrics.cumulative_layout_shift?.percentiles?.p75;
+    const clsParsed = clsRaw !== undefined && clsRaw !== null ? parseFloat(clsRaw) : null;
+    const cumulativeLayoutShift = clsParsed !== null && !isNaN(clsParsed) ? clsParsed : null;
+
     return NextResponse.json<CruxResponse>({
       success: true,
       hasData: true,
       domain,
       performance: {
         largestContentfulPaint: metrics.largest_contentful_paint?.percentiles?.p75 ?? null,
-        cumulativeLayoutShift: metrics.cumulative_layout_shift?.percentiles?.p75 ?? null,
+        cumulativeLayoutShift,
         interactionToNextPaint: metrics.interaction_to_next_paint?.percentiles?.p75 ?? null,
       },
     });
