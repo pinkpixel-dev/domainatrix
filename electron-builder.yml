@@ -1,0 +1,80 @@
+appId: dev.pinkpixel.domainatrix
+productName: Domainatrix
+copyright: "Copyright © 2026 Pink Pixel"
+
+directories:
+  output: dist/electron
+  buildResources: build
+
+# Files to bundle into the app package.
+# We ship the Next.js standalone server, the static assets, and the drizzle migrations.
+files:
+  - electron/**/*
+  - "!node_modules/**/*"
+
+# Extra resources copied alongside the app resources (accessible via process.resourcesPath).
+# The standalone server, public statics, and migrations land here.
+extraResources:
+  - from: ".next/standalone"
+    to: "app"
+    filter:
+      - "**/*"
+  - from: ".next/static"
+    to: "app/.next/static"
+    filter:
+      - "**/*"
+  - from: "public"
+    to: "app/public"
+    filter:
+      - "**/*"
+  - from: "drizzle"
+    to: "drizzle"
+    filter:
+      - "**/*"
+  - from: "build/icons"
+    to: "icons"
+    filter:
+      - "**/*"
+
+# ── Linux ─────────────────────────────────────────────────────────────────────
+linux:
+  icon: build/icons/linux
+  category: Utility
+  syncDesktopName: true
+  synopsis: Domain portfolio manager and monitor
+  description: >
+    Domainatrix is a self-hosted domain management tool. Track WHOIS data,
+    DNS records, SSL certificates, uptime, and expiry for your entire domain
+    portfolio from a single clean interface.
+  target:
+    - target: AppImage
+      arch:
+        - x64
+    - target: deb
+      arch:
+        - x64
+    - target: rpm
+      arch:
+        - x64
+
+# ── Windows ───────────────────────────────────────────────────────────────────
+win:
+  icon: build/icons/win/icon.ico
+  target:
+    - target: nsis
+      arch:
+        - x64
+
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: Domainatrix
+
+# ── macOS (not a current target, included for future reference) ───────────────
+# mac:
+#   icon: build/icons/mac/icon.icns
+#   target:
+#     - target: dmg
+#       arch: [x64, arm64]

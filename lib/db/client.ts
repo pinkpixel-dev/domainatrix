@@ -24,6 +24,7 @@ export function ensureDatabaseReady() {
     return;
   }
 
-  migrate(db, { migrationsFolder: "drizzle" });
+  const migrationsFolder = process.env.MIGRATIONS_FOLDER ?? "drizzle";
+  migrate(db, { migrationsFolder });
   migrated = true;
 }
