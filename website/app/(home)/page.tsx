@@ -4,7 +4,7 @@ export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen text-slate-100 selection:bg-zinc-500/30 selection:text-white">
       {/* Hero Section */}
-      <section className="flex flex-col items-center justify-center text-center px-4 py-20 lg:py-32 relative overflow-hidden">
+      <section className="flex flex-col items-center justify-center text-center px-4 pt-20 pb-4 lg:pt-32 lg:pb-12 relative overflow-hidden">
         {/* Decorative subtle background gradient (no gaudy glow) */}
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,var(--tw-gradient-stops))] from-zinc-800/20 via-zinc-950/0 to-transparent" />
         
@@ -16,7 +16,7 @@ export default function HomePage() {
           />
         </div>
         
-        <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight mb-6 text-white">
+        <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-6 text-white">
           Domainatrix
         </h1>
         
