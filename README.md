@@ -1,7 +1,7 @@
 # Domainatrix
 
 <p align="center">
-  <img src="./public/logo.png" alt="Domainatrix logo" width="300" />
+  <img src="./icon.png" alt="Domainatrix logo" width="300" />
 </p>
 
 Domainatrix is a self-hostable domain portfolio manager. Add your domains, let it pull live WHOIS, DNS, SSL, and host data with a single click, and get a clear view of what you own, when things expire, and what registrars are used.
