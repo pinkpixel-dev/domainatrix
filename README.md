@@ -21,6 +21,7 @@ Designed specifically for developers, designers, and domain collectors who want 
 * **Multiple Notification Channels**: Deliver automated JSON payloads to Discord/Slack webhooks or SMTP emails.
 * **Chrome UX Report (CrUX)**: Opt-in performance panel displaying real-world Core Web Vitals (LCP, CLS, INP) gauges for monitored domains.
 * **CSV & JSON Portability**: Back up or restore your portfolio via nested JSON exports or flat CSV lists.
+* **Documentation**: [https://domainatrix.xyz](https://domainatrix.xyz)
 
 ---
 
@@ -40,13 +41,41 @@ Designed specifically for developers, designers, and domain collectors who want 
 
 ---
 
+## Desktop App (Electron)
+
+Domainatrix runs as a fully integrated desktop client built with Electron.
+
+**Download the latest release:**
+
+**Linux (x64)**:
+- [`deb`](https://github.com/pinkpixel-dev/domainatrix/releases/download/v1.0.0/domainatrix_1.0.0_amd64.deb)
+- [`rpm`](https://github.com/pinkpixel-dev/domainatrix/releases/download/v1.0.0/domainatrix-1.0.0.x86_64.rpm)
+- [`AppImage`](https://github.com/pinkpixel-dev/domainatrix/releases/download/v1.0.0/Domainatrix-1.0.0.AppImage)
+**Windows (x64)**:
+- [`exe`](https://github.com/pinkpixel-dev/domainatrix/releases/download/v1.0.0/Domainatrix.Setup.1.0.0.exe)
+
+---
+
+## Self-Hosting (Docker)
+
+Run headless as a lightweight Docker container or native Node service on any Linux VPS.
+
+Refer to the detailed **[Self-Hosting Guide](docs/self-hosting.md)** for:
+* Docker Compose installation
+* Background cron configurations for automated uptime and WHOIS checks
+* PM2 / Systemd process management on a Linux VPS
+
+---
+
 ## Running Locally (Development)
 
-### 1. Prerequisites
+### Prerequisites
+
 Ensure you have Node.js (v20+) and npm installed on your system.
 
-### 2. Setup
-Clone the repository and install the dependencies:
+### Setup
+
+Clone the repository and install dependencies:
 
 ```bash
 git clone https://github.com/pinkpixel-dev/domainatrix.git
@@ -60,7 +89,8 @@ Copy the example environment configuration:
 cp .env.example .env
 ```
 
-### 3. Generate the Database Schema
+### Generate the Database Schema
+
 Initialize migrations and set up your local SQLite database:
 
 ```bash
@@ -68,7 +98,8 @@ npm run db:generate
 npm run db:migrate
 ```
 
-### 4. Run the Dev Server
+### Run the Dev Server
+
 Launch the local Next.js web application:
 
 ```bash
@@ -77,21 +108,17 @@ npm run dev
 
 Open your browser to `http://localhost:8765`.
 
----
-
-## Desktop App (Electron)
-
-Domainatrix runs as a fully integrated desktop client built with Electron.
-
 ### Run Desktop Client in Development
-To rebuild native SQL wrappers and launch the local Electron shell:
+
+Rebuild native SQL wrappers and launch the local Electron shell:
 
 ```bash
 npm run electron:dev
 ```
 
 ### Compile Desktop Packages
-To build production-ready desktop installers for Linux (`.deb`, `.rpm`, `.AppImage`) or Windows (`.exe`):
+
+Build production-ready desktop installers for Linux (`.deb`, `.rpm`, `.AppImage`) or Windows (`.exe`):
 
 ```bash
 # Compile packages for your host platform
@@ -103,17 +130,6 @@ npm run electron:build:win
 ```
 
 Installers and packages will compile into `dist/electron/`.
-
----
-
-## Production Self-Hosting
-
-Domainatrix can be run headless as a lightweight Docker container or a native Node service on any Linux VPS.
-
-Refer to the detailed **[Self-Hosting Guide](file:///home/sizzlebop/PINKPIXEL/PROJECTS/CURRENT/domainatrix/docs/self-hosting.md)** for:
-* Docker Compose installation
-* Background cron configurations for automated uptime and WHOIS checks
-* PM2 / Systemd process management on a Linux VPS
 
 ---
 
