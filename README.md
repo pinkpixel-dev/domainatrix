@@ -83,7 +83,7 @@ cd domainatrix
 npm install
 ```
 
-Copy the example environment configuration:
+Copy the example environment configuration and edit it with your own values:
 
 ```bash
 cp .env.example .env
