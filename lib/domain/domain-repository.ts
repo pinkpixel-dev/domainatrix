@@ -341,14 +341,9 @@ export function createDomainRepository(sqlite: Database.Database) {
   }
 
   async function importDomains(domainsToImport: DomainSummary[]): Promise<ImportResult> {
-    let created = 0;
-    let updated = 0;
-
-    for (const domain of domainsToImport) {
-      const domainName = normalizeDomainName(domain.name);
-      const id = toId(domainName);
-      const existing = await getDomainById(id);
-      const input = {
+    return importDomainInputs(
+      domainsToImport.map((domain) => ({
+        domainName: domain.name,
         registrarName: domain.registrar.name,
         expiryDate: domain.expiryDate === "Untracked" ? undefined : domain.expiryDate,
         notes: domain.notes,
@@ -356,15 +351,27 @@ export function createDomainRepository(sqlite: Database.Database) {
         links: domain.links,
         costings: domain.costings,
         notificationPreferences: domain.notificationPreferences,
-      };
+      })),
+    );
+  }
+
+  async function importDomainInputs(inputs: CreateDomainInput[]): Promise<ImportResult> {
+    let created = 0;
+    let updated = 0;
+
+    for (const input of inputs) {
+      const domainName = normalizeDomainName(input.domainName);
+      const id = toId(domainName);
+      const existing = await getDomainById(id);
+      const { domainName: _rawDomainName, ...domainInput } = input;
 
       if (existing) {
-        await updateDomain(id, input);
+        await updateDomain(id, domainInput);
         updated += 1;
       } else {
         await createDomain({
           domainName,
-          ...input,
+          ...domainInput,
         });
         created += 1;
       }
@@ -1144,6 +1151,7 @@ export function createDomainRepository(sqlite: Database.Database) {
     deleteDomain,
     exportPortfolio,
     importDomains,
+    importDomainInputs,
     saveEnrichmentData,
     recordDomainUpdate,
     listDomainUpdates,

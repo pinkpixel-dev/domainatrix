@@ -4,6 +4,9 @@ import type { DomainSummary, MonitoringStatus } from "@/lib/domain/types";
 
 type DomainCardGridProps = {
   domains: DomainSummary[];
+  totalCount?: number;
+  footerHref?: string;
+  footerLabel?: string;
 };
 
 const statusStyles: Record<MonitoringStatus, string> = {
@@ -16,7 +19,12 @@ function formatRenewalCost(value: number) {
   return value > 0 ? `$${value.toFixed(2)}` : "Untracked";
 }
 
-export function DomainCardGrid({ domains }: DomainCardGridProps) {
+export function DomainCardGrid({
+  domains,
+  totalCount = domains.length,
+  footerHref,
+  footerLabel = "See all domains",
+}: DomainCardGridProps) {
   if (domains.length === 0) {
     return (
       <section className="rounded-lg border border-border bg-card px-4 py-10 text-center text-sm text-muted-foreground">
@@ -95,6 +103,17 @@ export function DomainCardGrid({ domains }: DomainCardGridProps) {
           </div>
         </article>
       ))}
+      {footerHref ? (
+        <Link
+          href={footerHref}
+          className="flex min-h-[210px] flex-col items-center justify-center rounded-lg border border-dashed border-border bg-card p-4 text-center transition hover:border-muted-foreground/50 hover:bg-muted/30"
+        >
+          <span className="text-sm font-medium">{footerLabel}</span>
+          <span className="mt-2 text-xs text-muted-foreground">
+            Showing {domains.length} of {totalCount}
+          </span>
+        </Link>
+      ) : null}
     </section>
   );
 }

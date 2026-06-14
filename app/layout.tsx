@@ -4,7 +4,7 @@ import { AppShell } from "@/components/layout/app-shell";
 
 export const metadata: Metadata = {
   title: "Domainatrix",
-  description: "A modern domain portfolio monitor for ownership, expiry, DNS, SSL, and uptime intelligence.",
+  description: "A domain portfolio monitor for ownership, expiry, DNS, SSL, and uptime intelligence.",
 };
 
 export default function RootLayout({

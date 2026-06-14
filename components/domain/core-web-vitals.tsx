@@ -47,26 +47,29 @@ const ratingLabel: Record<MetricRating, string> = {
 };
 
 export function CoreWebVitals({ domain }: CoreWebVitalsProps) {
-  const [state, setState] = useState<"idle" | "loading" | "done">("idle");
   const [data, setData] = useState<CruxResponse | null>(null);
 
   useEffect(() => {
-    setState("loading");
+    let cancelled = false;
+
     fetch(`/api/crux?domain=${encodeURIComponent(domain)}`)
       .then((r) => r.json())
       .then((json: CruxResponse) => {
+        if (cancelled) return;
         setData(json);
-        setState("done");
       })
       .catch(() => {
+        if (cancelled) return;
         setData({ success: false, error: "Request failed" });
-        setState("done");
       });
+
+    return () => {
+      cancelled = true;
+    };
   }, [domain]);
 
   // Don't render the card at all if key isn't configured (503 → success:false + specific message)
   if (
-    state === "done" &&
     data &&
     !data.success &&
     "error" in data &&
@@ -84,7 +87,7 @@ export function CoreWebVitals({ domain }: CoreWebVitalsProps) {
       </div>
 
       <div className="px-4 py-4">
-        {state === "loading" || state === "idle" ? (
+        {!data ? (
           <LoadingState />
         ) : data && !data.success ? (
           <ErrorState />
@@ -114,7 +117,7 @@ function LoadingState() {
 function ErrorState() {
   return (
     <p className="py-2 text-sm text-muted-foreground">
-      Couldn't load CrUX data right now.
+      Could not load CrUX data right now.
     </p>
   );
 }
@@ -127,7 +130,7 @@ function NoDataState() {
         <p className="text-sm text-muted-foreground">No real-world traffic data available.</p>
         <p className="mt-1 text-xs text-muted-foreground/60">
           Google only tracks performance for sites with sufficient Chrome user traffic. Personal or
-          low-traffic domains often don't appear in the dataset.
+          low-traffic domains often do not appear in the dataset.
         </p>
       </div>
     </div>

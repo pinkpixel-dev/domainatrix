@@ -6,6 +6,7 @@ import {
   type UpdateDomainInput,
 } from "./domain-repository";
 import { enrichDomain as runEnrichment } from "../enrichment/enrich";
+import { csvToDomainInputs, domainsToCsv } from "./portfolio-csv";
 
 function getRepository() {
   ensureDatabaseReady();
@@ -98,6 +99,11 @@ export async function exportPortfolio() {
   return repository.exportPortfolio();
 }
 
+export async function exportPortfolioCsv() {
+  const payload = await exportPortfolio();
+  return domainsToCsv(payload.domains);
+}
+
 export async function importPortfolio(payload: PortfolioExport) {
   if (payload.version !== 1 || !Array.isArray(payload.domains)) {
     throw new Error("Unsupported import file.");
@@ -106,6 +112,17 @@ export async function importPortfolio(payload: PortfolioExport) {
   const repository = getRepository();
   await repository.seedDefaults();
   return repository.importDomains(payload.domains);
+}
+
+export async function importPortfolioCsv(csv: string) {
+  const inputs = csvToDomainInputs(csv);
+  if (inputs.length === 0) {
+    throw new Error("CSV import did not contain any domains.");
+  }
+
+  const repository = getRepository();
+  await repository.seedDefaults();
+  return repository.importDomainInputs(inputs);
 }
 
 export async function enrichDomain(id: string) {

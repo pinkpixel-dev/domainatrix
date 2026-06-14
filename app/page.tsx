@@ -23,6 +23,7 @@ import { getDashboardMetrics } from "@/lib/domain/domain-metrics";
 import { getDomainSummaries, getPortfolioUptimeSummary, getRecentDomainUpdates } from "@/lib/domain/domain-service";
 
 export const dynamic = "force-dynamic";
+const portfolioPreviewLimit = 5;
 
 type HomePageProps = {
   searchParams: Promise<{
@@ -56,6 +57,8 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   ]);
   const metrics = getDashboardMetrics(domains);
   const portfolioView = view === "grid" ? "grid" : "list";
+  const portfolioPreviewDomains = domains.slice(0, portfolioPreviewLimit);
+  const portfolioFooterLabel = `See all ${domains.length} domain${domains.length === 1 ? "" : "s"}`;
 
   return (
     <main className="space-y-8">
@@ -101,11 +104,11 @@ export default async function HomePage({ searchParams }: HomePageProps) {
         title="Recent activity"
         emptyText="No monitoring changes have been recorded yet."
         showDomainName
+        variant="compact-table"
       />
 
       <section className="space-y-4">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <h2 className="text-sm font-medium text-muted-foreground">Portfolio preview</h2>
           <div className="flex items-center gap-2">
             <Link
               href="/?view=list"
@@ -127,7 +130,23 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             </Link>
           </div>
         </div>
-        {portfolioView === "grid" ? <DomainCardGrid domains={domains} /> : <DomainTable domains={domains} />}
+        {portfolioView === "grid" ? (
+          <DomainCardGrid
+            domains={portfolioPreviewDomains}
+            totalCount={domains.length}
+            footerHref="/domains"
+            footerLabel={portfolioFooterLabel}
+          />
+        ) : (
+          <DomainTable
+            domains={portfolioPreviewDomains}
+            totalCount={domains.length}
+            showAddButton={false}
+            showFilters={false}
+            footerHref="/domains"
+            footerLabel={portfolioFooterLabel}
+          />
+        )}
       </section>
     </main>
   );
