@@ -1,0 +1,58 @@
+@import url("https://fonts.googleapis.com/css2?family=Mozilla+Text:wght@300..700&display=swap");
+@import "tailwindcss";
+@config "../tailwind.config.ts";
+@source "../app";
+@source "../components";
+@source "../lib";
+
+:root {
+  --font-app-sans: "Mozilla Text", Arial, sans-serif;
+  --background: 220 10% 8%;
+  --foreground: 0 0% 98%;
+  --card: 220 9% 11%;
+  --card-foreground: 0 0% 98%;
+  --muted: 220 9% 15%;
+  --muted-foreground: 220 7% 68%;
+  --border: 220 8% 21%;
+  --input: 220 8% 21%;
+  --ring: 0 0% 98%;
+  --primary: 0 0% 98%;
+  --primary-foreground: 0 0% 0%;
+  --primary-light: 280 57% 45%;
+  --secondary: 220 8% 18%;
+  --secondary-foreground: 0 0% 98%;
+  --accent: 175 65% 48%;
+  --accent-foreground: 220 10% 8%;
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 98%;
+  --radius: 0.5rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  font-family: var(--font-app-sans);
+  font-optical-sizing: auto;
+  background:
+    radial-gradient(circle at 1px 1px, hsl(0 0% 100% / 0.08) 1px, transparent 0) 0 0 / 24px 24px,
+    hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: hsl(var(--primary) / 0.35);
+}

@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+dist/
+.next/
+coverage/
+tsconfig.tsbuildinfo
+
+# Other
+.env
+.env*.local
+data/
+cron.txt
+last-completion.txt
+metrics-and-visualization.md
+
+# Docs
+CHANGELOG.md
+ERRORS.md
+MEMORY.md
+OVERVIEW.md
+PLAN.md
+ROADMAP.md
+STATUS.md
