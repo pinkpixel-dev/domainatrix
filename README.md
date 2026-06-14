@@ -1,7 +1,7 @@
 # Domainatrix
 
 <p align="center">
-  <img src="./icon.png" alt="Domainatrix logo" width="220" />
+  <img src="./icon.png" alt="Domainatrix logo" width="300" />
 </p>
 
 Domainatrix is a self-hostable domain portfolio manager, diagnostic tracker, and uptime monitor. Build a clean overview of your entire domain portfolio, track WHOIS changes, diagnose DNS records, check SSL certificate health, discover hidden subdomains, and monitor real-time HTTP uptime from a single desktop or server console.
@@ -21,6 +21,22 @@ Designed specifically for developers, designers, and domain collectors who want 
 * **Multiple Notification Channels**: Deliver automated JSON payloads to Discord/Slack webhooks or SMTP emails.
 * **Chrome UX Report (CrUX)**: Opt-in performance panel displaying real-world Core Web Vitals (LCP, CLS, INP) gauges for monitored domains.
 * **CSV & JSON Portability**: Back up or restore your portfolio via nested JSON exports or flat CSV lists.
+
+---
+
+## Preview
+
+<p align="center">
+  <img src="./screenshots/screenshot1.png" alt="Domainatrix Dashboard" width="700" />
+</p>
+
+<p align="center">
+  <img src="./screenshots/screenshot2.png" alt="Domainatrix Inventory" width="700" />
+</p>
+
+<p align="center">
+  <img src="./screenshots/screenshot4.png" alt="Domainatrix Details" width="700" />
+</p>
 
 ---
 
