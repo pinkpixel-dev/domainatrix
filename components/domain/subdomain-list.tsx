@@ -5,18 +5,6 @@ type SubdomainListProps = {
   subdomains: SubdomainSummary[];
 };
 
-const sourceLabel: Record<SubdomainSummary["source"], string> = {
-  crtsh: "CT log",
-  wordlist: "Wordlist",
-  both: "CT + Wordlist",
-};
-
-const sourcePill: Record<SubdomainSummary["source"], string> = {
-  crtsh: "bg-blue-950/60 text-blue-400 border-blue-800",
-  wordlist: "bg-muted/60 text-muted-foreground border-border",
-  both: "bg-emerald-950/60 text-emerald-400 border-emerald-800",
-};
-
 export function SubdomainList({ subdomains }: SubdomainListProps) {
   const resolved = subdomains.filter((s) => s.resolved);
   const unresolved = subdomains.filter((s) => !s.resolved);
@@ -89,13 +77,6 @@ function SubdomainRow({ sub }: { sub: SubdomainSummary }) {
         </span>
       )}
 
-      {/* Source pill */}
-      <span
-        className={`inline-flex items-center rounded border px-1.5 py-0.5 text-[10px] font-medium ${sourcePill[sub.source]}`}
-        title={sourceLabel[sub.source]}
-      >
-        {sourceLabel[sub.source]}
-      </span>
     </div>
   );
 }
