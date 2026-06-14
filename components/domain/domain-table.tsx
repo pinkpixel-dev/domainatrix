@@ -7,6 +7,7 @@ import type { DomainSummary, MonitoringStatus } from "@/lib/domain/types";
 
 type DomainTableProps = {
   domains: DomainSummary[];
+  title?: string;
   totalCount?: number;
   showAddButton?: boolean;
   showFilters?: boolean;
@@ -22,6 +23,7 @@ const statusStyles: Record<MonitoringStatus, string> = {
 
 export function DomainTable({
   domains,
+  title = "Portfolio",
   totalCount = domains.length,
   showAddButton = true,
   showFilters = true,
@@ -70,7 +72,7 @@ export function DomainTable({
     <section className="overflow-hidden rounded-lg border border-border bg-card">
       <div className="flex items-center justify-between border-b border-border px-4 py-3">
         <div>
-          <h2 className="text-sm font-medium">Portfolio</h2>
+          <h2 className="text-sm font-medium">{title}</h2>
           <p className="mt-1 text-xs text-muted-foreground">
             {filteredDomains.length} of {totalCount} domain{totalCount === 1 ? "" : "s"}
           </p>

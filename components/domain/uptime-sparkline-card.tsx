@@ -10,7 +10,7 @@ type UptimeSparklineCardProps = {
 const SPARK_COLS = 40;
 
 /**
- * Dashboard "Healthy monitors" card with an SVG sparkline background
+ * Dashboard "Health monitor" card with an SVG sparkline background
  * showing the portfolio-level uptime trend across recent checks.
  */
 export function UptimeSparklineCard({ checks, healthyCount, totalDomains }: UptimeSparklineCardProps) {
@@ -29,7 +29,7 @@ export function UptimeSparklineCard({ checks, healthyCount, totalDomains }: Upti
       {/* Content */}
       <div className="relative z-10">
         <div className="flex items-center justify-between gap-3">
-          <p className="text-sm text-muted-foreground">Healthy monitors</p>
+          <p className="text-sm text-muted-foreground">Health monitor</p>
           <Activity className="size-4 text-primary" aria-hidden="true" />
         </div>
         <p className="mt-5 text-3xl font-semibold tracking-normal">

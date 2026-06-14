@@ -30,7 +30,7 @@ export async function AppShell({ children }: { children: React.ReactNode }) {
             className="rounded-md drop-shadow-[0_0_5px_rgba(255,255,255,0.25)]"
           />
           <span>
-            <span className="rounded-md drop-shadow-[0_0_5px_rgba(255,255,255,0.25)] block text-[20px] font-bold text-gray-300">Domainatrix</span>
+            <span className="rounded-md drop-shadow-[0_0_4px_rgba(255,255,255,0.25)] block text-xl font-bold text-white">Domainatrix</span>
           </span>
         </Link>
 
