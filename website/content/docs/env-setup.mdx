@@ -1,0 +1,129 @@
+---
+title: Environment Configuration
+description: A complete guide to configuring your Domainatrix environment variables, alerts, and external APIs.
+---
+
+import { Steps } from 'fumadocs-ui/components/steps';
+
+Domainatrix uses environment variables for configuration. When self-hosting, these variables can be set in a `.env` file at the root of the project (if running locally or via PM2) or defined under the `environment` section of your `docker-compose.yml`.
+
+---
+
+## 📋 Environment Variables Reference
+
+Here is a list of all variables used by the application:
+
+| Variable | Purpose | Example/Default | Requirement |
+| :--- | :--- | :--- | :--- |
+| `NODE_ENV` | Running mode | `production` | Recommended |
+| `PORT` | Local server port | `8765` | Optional (default: `3000`) |
+| `HOSTNAME` | Local server host bind | `0.0.0.0` | Optional (default: `0.0.0.0`) |
+| `DB_FILE_NAME` | Path to SQLite database | `/app/data/domainatrix.sqlite` | Optional (default: `./data/domainatrix.sqlite`) |
+| `CRON_SECRET` | Token for securing background tasks | *See guide below* | **Required** for automations |
+| `NOTIFICATION_WEBHOOK_URL` | Webhook URL for Discord or Slack | *See guide below* | Optional |
+| `SMTP_HOST` | Outgoing mail server host | `smtp.example.com` | Optional (for email alerts) |
+| `SMTP_PORT` | Outgoing mail server port | `587` | Optional (default: `587`) |
+| `SMTP_SECURE` | Enable SSL/TLS (Port 465) | `false` | Optional |
+| `SMTP_USER` | SMTP username / login | `alerts@example.com` | Optional |
+| `SMTP_PASS` | SMTP password / app password | `my-app-password` | Optional |
+| `NOTIFICATION_EMAIL_FROM` | Name & Email sender header | `Domainatrix <alerts@example.com>` | Optional |
+| `NOTIFICATION_EMAIL_TO` | Email address where alerts go | `admin@example.com` | Optional |
+| `CRUX_API_KEY` | Google Chrome UX Report API Key | *See guide below* | Optional (enables PageSpeed) |
+
+---
+
+## 🔑 Generating a CRON_SECRET
+
+The `CRON_SECRET` is a private password that prevents random people from triggering your background monitoring. It is verified when your cron scheduler calls Domainatrix endpoints.
+
+To generate a secure key, run the following command in your terminal:
+```bash
+openssl rand -hex 32
+```
+This output is a random string (e.g., `8d2f7823ab...`). Copy and paste this string as the value for `CRON_SECRET` in your `.env` or `docker-compose.yml` file.
+
+---
+
+## 💬 Setting up Discord or Slack Webhooks
+
+Webhooks are simple links provided by chat platforms that let other applications send messages to your channels. Setting one up is fast and free.
+
+<Steps>
+### For Discord
+1. Open Discord and go to the channel where you want Domainatrix alerts to appear.
+2. Click the **Edit Channel** (gear icon) next to the channel name.
+3. Click on the **Integrations** tab in the sidebar.
+4. Click **Webhooks**, then click **New Webhook**.
+5. Give the bot a name (e.g., "Domainatrix") and copy the URL by clicking **Copy Webhook URL**.
+6. Set the `NOTIFICATION_WEBHOOK_URL` variable to this URL:
+   ```ini
+   NOTIFICATION_WEBHOOK_URL=https://discord.com/api/webhooks/...
+   ```
+
+### For Slack
+1. Open the Slack App Directory and search for "Incoming WebHooks", or go to [api.slack.com/apps](https://api.slack.com/apps).
+2. Create a new app or configure an incoming webhook for your workspace.
+3. Choose the channel you want notifications posted to and click **Add Incoming WebHooks Integration**.
+4. Copy the **Webhook URL** shown on the configuration page.
+5. Set the `NOTIFICATION_WEBHOOK_URL` variable to this URL:
+   ```ini
+   NOTIFICATION_WEBHOOK_URL=https://hooks.slack.com/services/...
+   ```
+</Steps>
+
+---
+
+## ✉️ Setting up SMTP Email Notifications
+
+If you do not want to use a Discord or Slack channel, you can configure Domainatrix to send alerts to an email address. 
+
+> [!NOTE]
+> Webhook delivery is preferred. If you define a `NOTIFICATION_WEBHOOK_URL`, the application will use the webhook and skip sending emails. To enable email alerts, make sure `NOTIFICATION_WEBHOOK_URL` is empty or commented out.
+
+Here is a guide to configure common providers:
+
+### For Custom Mail Servers (e.g. Fastmail, Mailgun, SendGrid)
+Fill in your host's information directly:
+```ini
+SMTP_HOST=smtp.fastmail.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=your_email@fastmail.com
+SMTP_PASS=your_app_password
+NOTIFICATION_EMAIL_FROM="Domainatrix <your_email@fastmail.com>"
+NOTIFICATION_EMAIL_TO=admin@example.com
+```
+
+### For Gmail
+Due to Google security standards, standard account passwords will not work. You must use an **App Password**:
+1. Go to your [Google Account settings](https://myaccount.google.com/).
+2. Select **Security** from the left-hand menu.
+3. Enable **2-Step Verification** (if not already enabled).
+4. Under "How you sign in to Google", select **App passwords**.
+5. Create a new app password (name it "Domainatrix") and copy the generated 16-character code.
+6. Configure your environment:
+   ```ini
+   SMTP_HOST=smtp.gmail.com
+   SMTP_PORT=587
+   SMTP_SECURE=false
+   SMTP_USER=your_gmail@gmail.com
+   SMTP_PASS=abcd-efgh-ijkl-mnop   # Paste the 16-character app password here (without spaces)
+   NOTIFICATION_EMAIL_FROM="Domainatrix <your_gmail@gmail.com>"
+   NOTIFICATION_EMAIL_TO=admin@example.com
+   ```
+
+---
+
+## 📈 Getting a Chrome UX Report (CrUX) API Key
+
+Domainatrix can pull real-world performance metrics (Core Web Vitals) for your domains directly from the Chrome User Experience Report (CrUX) and display them right on your domain details page.
+
+1. Go to the [Google AI Studio / Google Cloud Console](https://console.cloud.google.com/).
+2. Create a new project or select an existing one.
+3. In the APIs & Services library, search for and enable the **Chrome UX Report API**.
+4. Navigate to **Credentials** and click **Create Credentials** -> **API Key**.
+5. Copy your new API key and paste it as the value for `CRUX_API_KEY`:
+   ```ini
+   CRUX_API_KEY=AIzaSy...
+   ```
+6. Once configured, a new tab or section showing LCP (Largest Contentful Paint), CLS (Cumulative Layout Shift), and INP (Interaction to Next Paint) will automatically appear under each domain's detail page!

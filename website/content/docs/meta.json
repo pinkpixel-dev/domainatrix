@@ -1,0 +1,9 @@
+{
+  "title": "Documentation",
+  "pages": [
+    "index",
+    "installation",
+    "env-setup",
+    "features"
+  ]
+}

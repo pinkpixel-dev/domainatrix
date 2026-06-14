@@ -1,0 +1,112 @@
+---
+title: Core Features
+description: A detailed overview of Domainatrix features and tools.
+---
+
+Domainatrix provides a comprehensive set of features for managing, monitoring, and diagnosing your domain names. Here is a detailed look at how to use these tools.
+
+---
+
+## 1. Dashboard & Analytics
+
+The main dashboard is designed to give you a birds-eye view of your domain portfolio. It highlights key metrics and potential issues so you can take action before a domain or SSL certificate expires.
+
+![Dashboard Overview](/screenshots/screenshot1.png)
+
+### Expiry Timeline
+At the center of the dashboard is the **12-Month Expiry Timeline**. This is a custom, interactive visual timeline that maps out all of your domains by their expiration dates over the coming year.
+*   Domains expiring within **30 days** are highlighted in red.
+*   Domains expiring within **30–60 days** are highlighted in orange.
+*   Domains with longer lifetimes are shown in green or gray.
+
+### Risk & Cost Cards
+The top of the dashboard displays key summary metrics:
+*   **Annual Cost**: The sum of all domain renewal costs for the year (helping you budget).
+*   **Missing Expiry**: Alerting you to domains whose expiry dates are currently unknown or haven't been fetched yet.
+*   **SSL Expiring**: The number of domains with SSL certificates expiring within 30 days.
+*   **Auto-Renew Disabled**: A count of domains that will not automatically renew, which could lead to accidental expiration.
+*   **Notification Coverage**: The percentage of domains that have active notifications configured.
+
+---
+
+## 2. Domain Inventory
+
+The **Domains** page allows you to view, search, and manage your portfolio. You can toggle between a dense list view or a rich card grid.
+
+![Domain Inventory](/screenshots/screenshot2.png)
+
+### Search & Advanced Filtering
+- **Fuzzy Search**: Instantly filter your domains by name or registrar.
+- **Status Filters**: Filter domains by their health status (Active, Warn, Error, or Untracked).
+- **Registrar Filter**: Quickly narrow down your view to domains registered with specific registrars (e.g., Namecheap, Cloudflare, GoDaddy).
+
+### Category Tagging
+Assign custom, color-coded tags to your domains to keep things organized. You can easily group domains by project, client, or purpose (e.g., `prod`, `dev`, `marketing`, `parked`).
+
+---
+
+## 3. One-Click Diagnostics & Auto-Enrichment
+
+The core strength of Domainatrix is its automated enrichment engine. When you click **Enrich** on any domain, the application executes multiple background checks and populates your database with detailed diagnostics.
+
+![Core Diagnostics](/screenshots/screenshot4.png)
+
+### Diagnostic Fields Captured
+*   **WHOIS Details**: Retrieves registrar, registration date, last update date, expiration date, registrant email, and official registry status codes.
+*   **DNS Records**: Automatically queries and displays vital DNS records, including:
+    *   **NS** (Name Servers)
+    *   **MX** (Mail Exchangers)
+    *   **TXT** (Text records, often used for verification)
+    *   **A** & **AAAA** (IPv4 and IPv6 target addresses)
+*   **SSL Certificate Status**: Connects directly to the domain's server over TLS to extract the SSL certificate issuer (e.g., Let's Encrypt), validation status, and remaining days of validity.
+*   **Network Geolocation**: Resolves the target IP to find its physical location, including the country, city, ISP, and organization hosting the site.
+
+---
+
+## 4. Uptime Monitoring & Performance
+
+Domainatrix tracks your websites' availability in real-time, allowing you to ensure they remain accessible to your users.
+
+![Uptime & Expiry Rings](/screenshots/screenshot3.png)
+
+### Uptime Activity Grid
+On the domain details page, a 12-week GitHub-style grid shows the results of recent uptime checks.
+*   Each block represents a check window.
+*   Hovering over a block displays the exact timestamp and response latency in milliseconds.
+*   The overall average uptime percentage is displayed in the header.
+
+### Expiry Rings
+Beside the activity grid, two circular progress rings visually track the remaining time before your domain registration and SSL certificate expire.
+
+### Core Web Vitals (CrUX)
+If a `CRUX_API_KEY` is configured, a performance panel will load. This retrieves real-world user metrics from the Google Chrome UX Report, visualizing:
+*   **LCP (Largest Contentful Paint)**: Loading performance.
+*   **CLS (Cumulative Layout Shift)**: Visual stability.
+*   **INP (Interaction to Next Paint)**: Responsiveness.
+
+---
+
+## 5. Subdomain Discovery
+
+Identify all active subdomains under a primary domain to verify DNS hygiene and find hidden services.
+
+![Subdomain Discovery](/screenshots/screenshot5.png)
+
+Domainatrix combines two powerful techniques for discovery:
+1.  **Certificate Transparency Logs**: Queries the public `crt.sh` logs for certificates issued to subdomains.
+2.  **DNS Wordlist Probing**: Concurrently checks a built-in list of common subdomain prefixes (e.g., `dev`, `staging`, `api`, `mail`) to see if they resolve to an active IP address.
+
+Once discovered, all subdomains are listed with their status (Live or Unresolved), IPs, and the method by which they were found.
+
+---
+
+## 6. Notification Center & Logs
+
+Stay updated on critical changes in your portfolio. All events are logged in the app and can be pushed to your active communication channels.
+
+![Notification Center](/screenshots/screenshot6.png)
+
+*   **Change Detection**: Whenever a domain is scanned (manually or by cron), Domainatrix compares new results against the database. If there is a change in the IP address, DNS records, registrar, or SSL configuration, an event is logged.
+*   **Uptime Alerts**: If an uptime check fails (or recovers), an alert is generated.
+*   **Expiry Reminders**: Generates alerts when domains or certificates are 30, 14, 7, and 1 days away from expiring.
+*   **External Integration**: Delivers alerts to Discord, Slack, or Email (SMTP). If a network issue prevents delivery, you can retry from the Notification Center.

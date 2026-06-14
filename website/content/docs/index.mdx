@@ -1,0 +1,32 @@
+---
+title: Welcome to Domainatrix
+description: The ultimate self-hostable domain management suite.
+---
+
+import { Card, Cards } from 'fumadocs-ui/components/card';
+
+**Domainatrix** is a self-hostable domain portfolio manager, diagnostic tracker, and uptime monitor. It gives you a clean overview of your entire domain portfolio, tracks WHOIS changes, diagnoses DNS records, checks SSL certificate health, discovers hidden subdomains, and monitors real-time HTTP uptime—all from a single, private dashboard.
+
+Designed specifically for developers, designers, and domain collectors who want full privacy and control without paying for complex external platforms.
+
+![Domainatrix Dashboard](/screenshots/screenshot1.png)
+
+## Why Domainatrix?
+
+Unlike proprietary SaaS solutions, Domainatrix puts you in absolute control of your data:
+- **Self-Hosted & Private**: Your portfolio data lives in a lightweight, local SQLite database.
+- **No API Subscriptions**: Uses a custom, resilient fallback system to fetch WHOIS/RDAP data directly, without requiring subscription keys.
+- **All-in-One Utility**: Consolidates domains, DNS records, SSL certificates, historical change logs, and live monitoring into a single service.
+- **Runs Everywhere**: Available as a lightweight Docker container, a server service, or a packaged native desktop application.
+
+---
+
+## Get Started
+
+To begin setting up your instance of Domainatrix, follow the guides below:
+
+<Cards>
+  <Card title="Installation Guide" href="/docs/installation" description="Learn how to run Domainatrix using Docker, native Node, or as a Desktop App." />
+  <Card title="Environment Configuration" href="/docs/env-setup" description="Configure environment variables, email integrations, and API keys." />
+  <Card title="Core Features" href="/docs/features" description="Explore the full capabilities of Domainatrix, from Uptime Monitoring to Subdomain Scanning." />
+</Cards>
