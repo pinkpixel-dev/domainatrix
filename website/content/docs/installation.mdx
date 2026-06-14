@@ -11,12 +11,44 @@ Domainatrix is designed to be highly versatile. You can run it as a lightweight 
 
 ## 🚀 Desktop Installation
 
-If you prefer to run Domainatrix as a standalone desktop utility on your local machine, download the pre-compiled packages for your system.
+If you prefer to run Domainatrix as a standalone desktop utility on your local machine, download the pre-compiled package for your system.
 
-### Linux (AppImage)
+### Download Links
 
-1. Download the latest `.AppImage` package from the [GitHub Releases Page](https://github.com/pinkpixel-dev/domainatrix/releases/tag/v1.0.0).
-2. Open your terminal and grant execution permissions to the downloaded file:
+**Linux (x64):**
+- [Debian/Ubuntu package (`.deb`)](https://github.com/pinkpixel-dev/domainatrix/releases/download/v1.0.0/domainatrix_1.0.0_amd64.deb)
+- [Fedora/Red Hat package (`.rpm`)](https://github.com/pinkpixel-dev/domainatrix/releases/download/v1.0.0/domainatrix-1.0.0.x86_64.rpm)
+- [Universal AppImage (`.AppImage`)](https://github.com/pinkpixel-dev/domainatrix/releases/download/v1.0.0/Domainatrix-1.0.0.AppImage)
+
+**Windows (x64):**
+- [Windows Installer (`.exe`)](https://github.com/pinkpixel-dev/domainatrix/releases/download/v1.0.0/Domainatrix.Setup.1.0.0.exe)
+
+### Linux Installation
+
+#### Debian / Ubuntu (`.deb`)
+
+1. Download the `.deb` package.
+2. Install it using `dpkg` or `apt`:
+   ```bash
+   sudo dpkg -i domainatrix_1.0.0_amd64.deb
+   # If there are missing dependencies:
+   sudo apt install -f
+   ```
+3. Launch Domainatrix from your application menu or run `domainatrix` in your terminal.
+
+#### Fedora / RHEL (`.rpm`)
+
+1. Download the `.rpm` package.
+2. Install it using `dnf`:
+   ```bash
+   sudo dnf install ./domainatrix-1.0.0.x86_64.rpm
+   ```
+3. Launch Domainatrix from your application menu or run `domainatrix` in your terminal.
+
+#### AppImage (Universal)
+
+1. Download the `.AppImage` package.
+2. Grant execution permissions:
    ```bash
    chmod +x Domainatrix-1.0.0.AppImage
    ```
@@ -28,9 +60,10 @@ If you prefer to run Domainatrix as a standalone desktop utility on your local m
 All application state, history, and domain settings will be safely stored locally in:
 `~/.config/domainatrix/data/domainatrix.sqlite`
 
-### Windows (Installer)
-1. Download the `Domainatrix-Setup-1.0.0.exe` from the [GitHub Releases Page](https://github.com/pinkpixel-dev/domainatrix/releases/tag/v1.0.0).
-2. Run the installer and follow the instructions.
+### Windows Installation
+
+1. Download the `.exe` installer.
+2. Run the `Domainatrix.Setup.1.0.0.exe` installer and follow the instructions.
 
 ---
 
@@ -91,6 +124,9 @@ Ensure Node.js (v20+), npm, and SQLite3 are installed on your server:
 # Ubuntu/Debian example
 sudo apt update
 sudo apt install -y nodejs npm sqlite3
+
+# Arch Linux example
+sudo pacman -Syu nodejs npm sqlite
 ```
 
 ### Clone and Build
