@@ -14,14 +14,7 @@ export default function SettingsPage() {
       <CronSettingsPanel />
 
       <NotificationDeliveryPanel />
-
-      <section className="rounded-lg border border-border bg-card p-5">
-        <h2 className="text-sm font-medium">Next up</h2>
-        <ul className="mt-4 space-y-3 text-sm leading-6 text-muted-foreground">
-          <li>Display controls for density, theme, and portfolio defaults.</li>
-          <li>Email delivery and notification retry history.</li>
-        </ul>
-      </section>
+      
     </main>
   );
 }

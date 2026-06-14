@@ -35,9 +35,9 @@ describe("domain repository", () => {
     const domains = await repository.listDomains();
 
     expect(domains.map((domain) => domain.name)).toEqual([
-      "domainatrix.app",
-      "pinkpixel.dev",
-      "sizzlebop.dev",
+      "example-app.com",
+      "example-brand.com",
+      "example-personal.com",
     ]);
   });
 

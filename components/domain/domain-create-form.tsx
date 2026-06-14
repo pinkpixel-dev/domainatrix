@@ -104,7 +104,7 @@ export function DomainCreateForm({ registrars }: DomainCreateFormProps) {
             setConflictId(null);
             setError("");
           }}
-          placeholder="pinkpixel.dev"
+          placeholder="example.com"
           className="h-10 w-full rounded-md border border-input bg-background px-3 text-sm outline-none transition placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20"
         />
         <p className={validation.valid ? "text-sm text-muted-foreground" : "text-sm text-destructive"}>

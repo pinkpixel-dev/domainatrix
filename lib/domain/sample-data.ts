@@ -3,18 +3,18 @@ import type { DomainSummary } from "./types";
 
 const rawDomains = [
   {
-    id: "pinkpixel-dev",
-    name: "pinkpixel.dev",
+    id: "example-brand",
+    name: "example-brand.com",
     expiryDate: "2026-09-18",
     monitoringStatus: "healthy",
-    notes: "Primary Pink Pixel site and brand hub.",
+    notes: "Primary brand website and documentation hub.",
     tags: ["brand", "production"],
     links: [
       {
-        id: "link-pinkpixel-dev-website",
+        id: "link-example-brand-website",
         name: "Website",
-        url: "https://pinkpixel.dev",
-        description: "Public brand hub.",
+        url: "https://example-brand.com",
+        description: "Public brand page.",
       },
     ],
     notificationPreferences: [
@@ -38,18 +38,18 @@ const rawDomains = [
     host: { org: "Cloudflare", city: "San Francisco", country: "US" },
   },
   {
-    id: "domainatrix-app",
-    name: "domainatrix.app",
+    id: "example-app",
+    name: "example-app.com",
     expiryDate: "2026-07-04",
     monitoringStatus: "warning",
-    notes: "Future home for the rebranded domain monitoring app.",
+    notes: "Future home for the rebranded product interface.",
     tags: ["product", "watch"],
     links: [
       {
-        id: "link-domainatrix-app-product",
+        id: "link-example-app-product",
         name: "Product",
-        url: "https://domainatrix.app",
-        description: "Future public product page.",
+        url: "https://example-app.com",
+        description: "Product staging page.",
       },
     ],
     notificationPreferences: [
@@ -73,18 +73,18 @@ const rawDomains = [
     host: { org: "Unassigned", city: "Unknown", country: "Unknown" },
   },
   {
-    id: "sizzlebop-dev",
-    name: "sizzlebop.dev",
+    id: "example-personal",
+    name: "example-personal.com",
     expiryDate: "2027-02-12",
     monitoringStatus: "healthy",
-    notes: "Personal dev experiments and project staging.",
+    notes: "Personal portfolio website and sandbox area.",
     tags: ["lab", "personal"],
     links: [
       {
-        id: "link-sizzlebop-dev-lab",
+        id: "link-example-personal-lab",
         name: "Lab",
-        url: "https://sizzlebop.dev",
-        description: "Personal experiments.",
+        url: "https://example-personal.com",
+        description: "Dev staging sandbox.",
       },
     ],
     notificationPreferences: [

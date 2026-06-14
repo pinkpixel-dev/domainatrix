@@ -3,11 +3,11 @@ import { getDaysUntilExpiry, normalizeDomainName, validateDomainName } from "./d
 
 describe("domain utils", () => {
   it("normalizes URLs into root domain names", () => {
-    expect(normalizeDomainName(" https://www.PinkPixel.dev/projects ")).toBe("pinkpixel.dev");
+    expect(normalizeDomainName(" https://www.example.com/projects ")).toBe("example.com");
   });
 
   it("accepts a normal domain", () => {
-    expect(validateDomainName("pinkpixel.dev")).toEqual({ valid: true });
+    expect(validateDomainName("example.com")).toEqual({ valid: true });
   });
 
   it("rejects an invalid domain", () => {
