@@ -73,6 +73,40 @@ describe("notification delivery", () => {
       },
     ]);
   });
+
+  it("formats payload correctly for Discord webhooks", async () => {
+    const requests: Array<{ url: string; init?: RequestInit }> = [];
+
+    await deliverNotification(notification(), {
+      settings: getNotificationDeliverySettings({ NOTIFICATION_WEBHOOK_URL: "https://discord.com/api/webhooks/123/abc" }),
+      fetcher: async (url, init) => {
+        requests.push({ url, init });
+        return new Response(null, { status: 204 });
+      },
+    });
+
+    expect(requests).toHaveLength(1);
+    expect(JSON.parse(String(requests[0].init?.body))).toEqual({
+      content: "example.dev is down.",
+    });
+  });
+
+  it("formats payload correctly for Slack webhooks", async () => {
+    const requests: Array<{ url: string; init?: RequestInit }> = [];
+
+    await deliverNotification(notification(), {
+      settings: getNotificationDeliverySettings({ NOTIFICATION_WEBHOOK_URL: "https://hooks.slack.com/services/123/abc" }),
+      fetcher: async (url, init) => {
+        requests.push({ url, init });
+        return new Response(null, { status: 200 });
+      },
+    });
+
+    expect(requests).toHaveLength(1);
+    expect(JSON.parse(String(requests[0].init?.body))).toEqual({
+      text: "example.dev is down.",
+    });
+  });
 });
 
 function notification(overrides: Partial<NotificationSummary> = {}): NotificationSummary {

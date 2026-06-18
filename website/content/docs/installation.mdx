@@ -97,8 +97,8 @@ services:
       - DB_FILE_NAME=/app/data/domainatrix.sqlite
       - PORT=3000
       - HOSTNAME=0.0.0.0
-      - CRON_SECRET=your_super_secure_cron_secret
-      # Add optional environment variables here (see Environment Setup page)
+      # You can configure all other settings (Cron Secret, Webhooks, SMTP, Google CrUX)
+      # directly from the Settings UI in the browser once the container is running.
     volumes:
       - ./data:/app/data
 ```
@@ -145,8 +145,8 @@ Use PM2 to run and keep the application alive:
 # Install PM2 globally
 sudo npm install -g pm2
 
-# Run the standalone server with necessary environment variables
-pm2 start .next/standalone/server.js --name domainatrix --env PORT=8765,DB_FILE_NAME=./data/domainatrix.sqlite,CRON_SECRET=your_cron_secret
+# Run the standalone server. Other settings can be set directly in the UI.
+pm2 start .next/standalone/server.js --name domainatrix --env PORT=8765,DB_FILE_NAME=./data/domainatrix.sqlite
 
 # Ensure PM2 restarts upon system boot
 pm2 save
@@ -165,7 +165,7 @@ Open your system crontab:
 crontab -e
 ```
 
-Add the following entries (make sure to replace `your_super_secure_cron_secret` with the value you defined in your `.env` or `docker-compose.yml` file, and update `http://127.0.0.1:8765` with your actual instance URL if needed):
+Add the following entries (make sure to replace `your_super_secure_cron_secret` with the secret generated on the **Settings** page in the UI, and update `http://127.0.0.1:8765` with your actual instance URL if needed):
 
 ```bash
 # 1. Trigger HTTP uptime checks every 5 minutes (lightweight, rapid checks)

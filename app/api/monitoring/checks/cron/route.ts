@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getCronAuthStatus } from "@/lib/monitoring/cron-auth";
 import { runPortfolioChecks } from "@/lib/monitoring/domain-check-service";
+import { getSetting } from "@/lib/settings/settings-service";
 
 export const dynamic = "force-dynamic";
 
@@ -13,7 +14,8 @@ export async function POST(request: Request) {
 }
 
 async function runScheduledChecks(request: Request) {
-  const auth = getCronAuthStatus(request.headers, process.env.CRON_SECRET);
+  const cronSecret = await getSetting("CRON_SECRET");
+  const auth = getCronAuthStatus(request.headers, cronSecret);
 
   if (!auth.authorized) {
     return NextResponse.json({ error: auth.message }, { status: auth.status });

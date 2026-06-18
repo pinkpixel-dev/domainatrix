@@ -1,5 +1,6 @@
 import nodemailer from "nodemailer";
 import type { NotificationSummary } from "./types";
+import { getSetting } from "../settings/settings-service";
 
 type FetchLike = (input: string, init?: RequestInit) => Promise<Response>;
 
@@ -41,13 +42,50 @@ type DeliverNotificationOptions = {
 
 type EnvMap = Record<string, string | undefined>;
 
-export function getNotificationDeliverySettings(env: EnvMap = process.env): NotificationDeliverySettings {
-  const webhookUrl = env.NOTIFICATION_WEBHOOK_URL?.trim();
-  const email = getEmailDeliverySettings(env);
+export function getNotificationDeliverySettings(env?: EnvMap): NotificationDeliverySettings {
+  if (env) {
+    const webhookUrl = env.NOTIFICATION_WEBHOOK_URL?.trim();
+    const email = getEmailDeliverySettings(env);
+    return {
+      webhookUrl: webhookUrl || undefined,
+      email,
+    };
+  }
+
+  const webhookUrl = getSetting("NOTIFICATION_WEBHOOK_URL")?.trim();
+  const email = getEmailDeliverySettingsFromDb();
 
   return {
     webhookUrl: webhookUrl || undefined,
     email,
+  };
+}
+
+function getEmailDeliverySettingsFromDb(): EmailDeliverySettings | undefined {
+  const host = getSetting("SMTP_HOST")?.trim();
+  const user = getSetting("SMTP_USER")?.trim();
+  const pass = getSetting("SMTP_PASS")?.trim();
+  const from = getSetting("NOTIFICATION_EMAIL_FROM")?.trim();
+  const to = getSetting("NOTIFICATION_EMAIL_TO")?.trim();
+
+  if (!host || !user || !pass || !from || !to) {
+    return undefined;
+  }
+
+  const portStr = getSetting("SMTP_PORT");
+  const port = Number(portStr || "587");
+
+  const secureStr = getSetting("SMTP_SECURE");
+  const secure = secureStr === "true" || port === 465;
+
+  return {
+    host,
+    port: Number.isFinite(port) ? port : 587,
+    secure,
+    user,
+    pass,
+    from,
+    to,
   };
 }
 
@@ -74,10 +112,17 @@ async function deliverWebhookNotification(
   fetcher: FetchLike = fetch,
 ): Promise<NotificationDeliveryResult> {
   try {
-    const response = await fetcher(webhookUrl, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({
+    let body: string;
+    if (webhookUrl.includes("discord.com") || webhookUrl.includes("discordapp.com")) {
+      body = JSON.stringify({
+        content: notification.message || `${notification.domainName}: ${notification.changeType}`,
+      });
+    } else if (webhookUrl.includes("hooks.slack.com")) {
+      body = JSON.stringify({
+        text: notification.message || `${notification.domainName}: ${notification.changeType}`,
+      });
+    } else {
+      body = JSON.stringify({
         id: notification.id,
         domainId: notification.domainId,
         domainName: notification.domainName,
@@ -85,7 +130,13 @@ async function deliverWebhookNotification(
         message: notification.message,
         createdAt: notification.createdAt,
         source: "domainatrix",
-      }),
+      });
+    }
+
+    const response = await fetcher(webhookUrl, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body,
     });
 
     if (!response.ok) {

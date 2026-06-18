@@ -2,7 +2,7 @@ services:
   domainatrix:
     build:
       context: .
-    image: domainatrix:1.0.0
+    image: domainatrix:1.0.1
     container_name: domainatrix
     restart: unless-stopped
     ports:

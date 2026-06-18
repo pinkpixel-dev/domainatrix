@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getSetting } from "@/lib/settings/settings-service";
 
 export const dynamic = "force-dynamic";
 
@@ -26,7 +27,7 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  const CRUX_API_KEY = process.env.CRUX_API_KEY;
+  const CRUX_API_KEY = await getSetting("CRUX_API_KEY");
 
   if (!CRUX_API_KEY) {
     return NextResponse.json<CruxResponse>(

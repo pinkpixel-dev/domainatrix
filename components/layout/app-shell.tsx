@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ChartNoAxesCombined, Globe2, Settings, ShieldCheck } from "lucide-react";
 import { NotificationBell } from "@/components/notifications/notification-bell";
 import { getNotifications, getUnreadNotificationCount } from "@/lib/notifications/notification-service";
+import { HelpWidget } from "./help-widget";
 
 const navItems = [
   { href: "/", label: "Dashboard", icon: ChartNoAxesCombined },
@@ -19,37 +20,43 @@ export async function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen">
-      <aside className="fixed inset-y-0 left-0 hidden w-64 border-r border-border bg-background/92 px-4 py-5 backdrop-blur md:block">
-        <Link href="/" className="flex items-center gap-3 ml-1">
-          <Image
-            src="/logo.png"
-            alt="Domainatrix logo"
-            width={60}
-            height={60}
-            loading="eager"
-            className="rounded-md drop-shadow-[0_0_5px_rgba(255,255,255,0.25)]"
-          />
-          <span>
-            <span className="rounded-md drop-shadow-[0_0_4px_rgba(255,255,255,0.25)] block text-xl font-bold text-white">Domainatrix</span>
-          </span>
-        </Link>
+      <aside className="fixed inset-y-0 left-0 hidden w-64 border-r border-border bg-background/92 px-4 py-5 backdrop-blur md:flex md:flex-col md:justify-between">
+        <div>
+          <Link href="/" className="flex items-center gap-3 ml-1">
+            <Image
+              src="/logo.png"
+              alt="Domainatrix logo"
+              width={60}
+              height={60}
+              loading="eager"
+              className="rounded-md drop-shadow-[0_0_5px_rgba(255,255,255,0.25)]"
+            />
+            <span>
+              <span className="rounded-md drop-shadow-[0_0_4px_rgba(255,255,255,0.25)] block text-xl font-bold text-white">Domainatrix</span>
+            </span>
+          </Link>
 
-        <nav className="mt-8 space-y-1">
-          {navItems.map((item) => {
-            const Icon = item.icon;
+          <nav className="mt-8 space-y-1">
+            {navItems.map((item) => {
+              const Icon = item.icon;
 
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="flex h-10 items-center gap-3 rounded-md px-3 text-sm text-muted-foreground transition hover:bg-muted hover:text-foreground"
-              >
-                <Icon className="size-4" aria-hidden="true" />
-                {item.label}
-              </Link>
-            );
-          })}
-        </nav>
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="flex h-10 items-center gap-3 rounded-md px-3 text-sm text-muted-foreground transition hover:bg-muted hover:text-foreground"
+                >
+                  <Icon className="size-4" aria-hidden="true" />
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
+        </div>
+
+        <div>
+          <HelpWidget variant="sidebar" />
+        </div>
       </aside>
 
       <div className="md:pl-64">
@@ -60,7 +67,10 @@ export async function AppShell({ children }: { children: React.ReactNode }) {
           <div className="hidden text-sm text-muted-foreground md:block">
             Domain portfolio management
           </div>
-          <NotificationBell notifications={notifications} unreadCount={unreadCount} />
+          <div className="flex items-center gap-3">
+            <HelpWidget variant="header" />
+            <NotificationBell notifications={notifications} unreadCount={unreadCount} />
+          </div>
         </header>
         <div className="px-4 py-8 md:px-8">{children}</div>
       </div>

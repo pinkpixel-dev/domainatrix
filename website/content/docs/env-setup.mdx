@@ -5,7 +5,9 @@ description: A complete guide to configuring your Domainatrix environment variab
 
 import { Steps } from 'fumadocs-ui/components/steps';
 
-Domainatrix uses environment variables for configuration. When self-hosting, these variables can be set in a `.env` file at the root of the project (if running locally or via PM2) or defined under the `environment` section of your `docker-compose.yml`.
+Domainatrix is configured directly through the **Settings** page in the application UI (which saves settings securely to the database). This is the recommended way to set up your webhooks, SMTP email settings, Chrome UX API key, and Cron Secret.
+
+Alternatively, for headless server deployments, these variables can still be configured via a `.env` file at the root of the project (if running PM2/local) or defined under the `environment` section of your `docker-compose.yml`.
 
 ---
 

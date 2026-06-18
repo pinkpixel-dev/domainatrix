@@ -83,7 +83,7 @@ cd domainatrix
 npm install
 ```
 
-Copy the example environment configuration and edit it with your own values:
+Optional: Copy the example environment configuration if you need to customize the server port or SQLite database file path. All other application configurations (such as Discord/Slack webhooks, SMTP email settings, Google CrUX keys, and Cron Secrets) are managed directly on the **Settings** page in the application UI:
 
 ```bash
 cp .env.example .env
